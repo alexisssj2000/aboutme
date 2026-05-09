@@ -1,0 +1,12 @@
+{
+  "name": "aboutme",
+  "version": "1.0.0",
+  "description": "Backend serevices about my abilities",
+  "license": "ISC",
+  "author": "alexis",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  }
+}
