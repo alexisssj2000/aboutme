@@ -4,9 +4,14 @@
   "description": "Backend serevices about my abilities",
   "license": "ISC",
   "author": "alexis",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "test"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
   }
 }
