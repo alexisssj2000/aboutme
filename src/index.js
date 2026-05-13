@@ -1,13 +1,13 @@
-import express from 'express'
 
-const app = express()
+import app from "./app.js"
+import connecBd from "./config/db.js"
+import dotenv from "dotenv"
 
-app.get('/', (req, res) => {
-    res.send('Respuesta exitosa')
-} )
+dotenv.config()
 
-const PORT = 3000
+connecBd()
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
-    console.log('Servidor levanta en puerto' + PORT)
+    console.log(`Servidor levanta en puerto http://localhost:${PORT}`)
 })
