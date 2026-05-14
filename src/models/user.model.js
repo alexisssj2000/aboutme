@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
         timestamp:true
 
 })
-
+    userSchema.methods.comparePassword = async function (candidatePassword) {
+    // 'this.password' is the hashed one in the DB
+    return await bcrypt.compare(candidatePassword, this.password);
+    };
 userSchema.pre('save', async function () {
     if(!this.isModified('password')) return;
 
