@@ -24,7 +24,7 @@ const projectSchema = mongoose.Schema({
     type:{
         type: String,
         required: true,
-        enum: ['web', 'mobile','iot','dekstop','other'],
+        enum: ['web', 'mobile','iot','desktop','other'],
         trim: true
     },
      img:{
