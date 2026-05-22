@@ -1,42 +1,40 @@
 import mongoose from "mongoose";
 
-const certificatesSchema = mongoose.Schema({
-    user:{
+const certificatesSchema = new mongoose.Schema({
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required:true
+        required: true
     },
-    name:{
+    name: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    },
+    description: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    },
+    issuer: { // Changed from 'enterprise' for industry standard
+        type: String, 
+        required: true, 
+        trim: true 
+    },
+    issueDate: { // Let's employers know when you earned it
+        type: Date,
+        required: true 
+    },
+    credentialUrl: { // Link to verify the certificate (Coursera, Credly, etc.)
         type: String,
-        required: true,
+        required: false, // Set to false because some certs are just PDFs
         trim: true
     },
-    description:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    enterprise:{
-        type: String,
-        required: true,
-        trim: true
-    },
-    certificate:{
-        type: String,
-        required: true,
-        enum: ['web', 'mobile','iot','desktop','other'],
-        trim: true
-    },
-     img:{
+    img: {
         type: String,
         required: true,
     },
-    
-    
-},
-    {
-        timestamps:true
-    }
-)
+}, { timestamps: true });
 
-export default mongoose.model('Project', projectSchema)
+// Fixed the export to create a 'Certificate' model!
+export default mongoose.model('Certificate', certificatesSchema);

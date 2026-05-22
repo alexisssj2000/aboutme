@@ -18,4 +18,4 @@ const createUploader = (foldername)=> {
 
 
 export const uploadImg = createUploader('projects')
-export const uploadCertificates = createUploader('certificates')
+export const uploadCertificates = createUploader('certifi')
