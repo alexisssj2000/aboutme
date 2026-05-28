@@ -27,3 +27,12 @@ export const createCertificate = async (req, res) => {
     }
 };
 
+export const getCertificates = async (req, res) => {
+    try {
+        
+        const certificates = await Certificate.find(); // Get projects for the authenticated user
+        res.status(200).json(certificates);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }  
+}

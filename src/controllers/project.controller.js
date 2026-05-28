@@ -24,3 +24,13 @@ export const createProject = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const getProjects = async (req, res) => {
+    try {
+        
+        const projects = await Project.find(); // Get projects for the authenticated user
+        res.status(200).json(projects);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }  
+};
