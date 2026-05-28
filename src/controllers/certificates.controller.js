@@ -1,4 +1,5 @@
 import Certificate from "../models/certificates.model.js";
+import { logger } from "../utils/logger.js";
 
 
 export const createCertificate = async (req, res) => {
@@ -9,7 +10,7 @@ export const createCertificate = async (req, res) => {
         // We get the path so we can save it to the database
         const imagePath = req.file ? req.file.path : null;
 
-        const newProject = new Certificate({
+        const newCertificate = new Certificate({
             user: req.user.id, // From your verifyToken middleware
             name,
             description,
@@ -19,20 +20,22 @@ export const createCertificate = async (req, res) => {
             img: imagePath
         });
 
-        await newProject.save();
-        res.status(201).json(newProject);
+        await newCertificate.save();
+        logger.info(`Certificate created successfully: ${newCertificate.name}, User ID: ${req.user.id}`);
+        res.status(201).json(newCertificate);
         
     } catch (error) {
+        logger.error(`Error creating certificate: ${error.message}, User ID: ${req.user.id}`);
         res.status(500).json({ error: error.message });
     }
 };
 
 export const getCertificates = async (req, res) => {
     try {
-        
-        const certificates = await Certificate.find(); // Get projects for the authenticated user
+        const certificates = await Certificate.find();
         res.status(200).json(certificates);
     } catch (error) {
+        logger.error(`Error fetching certificates: ${error.message}`);
         res.status(500).json({ error: error.message });
     }  
 }
