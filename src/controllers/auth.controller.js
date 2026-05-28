@@ -1,5 +1,6 @@
 import User from "../models/user.model.js"
 import  jwt from "jsonwebtoken"
+import { logger } from "../utils/logger.js"
 
 export const register = async (req, res) => 
 {
@@ -18,7 +19,7 @@ export const register = async (req, res) =>
         await newUser.save()
         console.log("User register susesfuly")
     } catch (error) {
-        console.log("Upps somethig happen")
+        logger.error(`Error registering user: ${error.message}`);
         res.status(500).json({error: error.message})
 
     }
@@ -53,12 +54,14 @@ export const login = async (req, res) => {
 
         res.status(200).json({
             message: "login susesfuly",
-            token,
+            tokens,
             user: {id: user.id, username: user.username, email: user.email}
         })
 
     } catch (error) {
-        res.status(500)-json({message:"somethig happen"})
+        logger.error(`Error fetching login: ${error.message}, User Email: ${req.body.email}`);
+
+        res.status(500).json({message:"somethig happen"})
     }
 
 
@@ -69,6 +72,7 @@ export const allUsers = async (req, res) => {
         const users = await User.find().select("-password")
         res.status(200).json(users)
     } catch (error) {
+        logger.error(`Error fetching users: ${error.message}`);
         res.status(500).json({message: "somethig happen"})
     }
 }  
