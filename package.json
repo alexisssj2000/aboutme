@@ -7,7 +7,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
@@ -22,5 +22,8 @@
     "multer": "^2.1.1",
     "nodemon": "^3.1.14",
     "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }
