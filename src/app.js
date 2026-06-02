@@ -22,10 +22,10 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions)); // Apply it!
+app.use('/uploads', express.static(path.join(__dirname, 'public')));
 
 app.use(morgan('dev'));
 app.use(express.json())
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api",router)
 export default app
