@@ -4,6 +4,14 @@ import router from './routes/router.js'
 import cors from 'cors'; // 1. Import CORS
 import { logger } from './utils/logger.js';
 
+// 1. Importar los módulos nativos de Node.js
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// 2. Recrear __dirname para ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 // 2. Configure CORS to only allow your specific frontend URL/IP
@@ -18,6 +26,6 @@ app.use(cors(corsOptions)); // Apply it!
 app.use(morgan('dev'));
 app.use(express.json())
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api",router)
 export default app
