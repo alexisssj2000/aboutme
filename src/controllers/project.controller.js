@@ -1,6 +1,11 @@
 import Project from '../models/projects.model.js';
 import { logger } from '../utils/logger.js';
-
+const getPublicImageUrl = (filePath) => {
+    if (!filePath) return '';
+    // Elimina 'src/uploads/' del inicio (case-insensitive)
+    // Ej: 'src/uploads/projects/foto.jpg' -> 'projects/foto.jpg'
+    return filePath.replace(/^src\/uploads\//i, '').replace(/^uploads\//i, '');
+};
 
 export const createProject = async (req, res) => {
     try {
@@ -31,8 +36,17 @@ export const createProject = async (req, res) => {
 
 export const getProjects = async (req, res) => {
     try {
-        const projects = await Project.find(); // Get projects for the authenticated user
-        res.status(200).json(projects);
+        const projects = await Project.find();
+        
+        // Transformamos los datos antes de enviarlos al frontend
+        const projectsWithPublicUrl = projects.map(project => {
+            const projectObj = project.toObject();
+            // Limpiamos la ruta: de 'src/uploads/projects/foto.jpg' a 'projects/foto.jpg'
+            projectObj.img = getPublicImageUrl(projectObj.img);
+            return projectObj;
+        });
+
+        res.status(200).json(projectsWithPublicUrl);
     } catch (error) {
         logger.error(`Error fetching projects: ${error.message}`);
         res.status(500).json({ error: error.message });
