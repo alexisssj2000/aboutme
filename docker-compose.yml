@@ -1,0 +1,41 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      CI: "true"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+  mongodb:
+    image: mongo:8
+    container_name: mongodb_aboutme
+    restart: unless-stopped
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  node_modules:
+  mongodb_data:

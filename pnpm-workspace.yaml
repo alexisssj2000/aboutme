@@ -1,0 +1,4 @@
+# pnpm-workspace.yaml
+allowBuilds:
+  unrs-resolver: true
+  jest: true
