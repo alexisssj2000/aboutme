@@ -15,9 +15,13 @@ services:
       NODE_ENV: development
       PORT: 3000
       CI: "true"
+      MONGO_URI: ${MONGO_DB_URI}
     depends_on:
       mongodb:
         condition: service_healthy
+
+
+
   mongodb:
     image: mongo:8
     container_name: mongodb_aboutme
@@ -29,6 +33,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=aboutme
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
